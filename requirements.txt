@@ -1,0 +1,30 @@
+# Contextor - Jetson Orin Nano Context Recorder
+# Requirements for Python 3.10+
+
+# Audio processing
+sounddevice>=0.4.6
+numpy>=1.24.0
+
+# Speech recognition
+faster-whisper>=0.10.0
+
+# Note: PyTorch should be installed from NVIDIA's Jetson repository
+# for optimal GPU support. See scripts/install.sh for details.
+# torch>=2.0.0
+# torchaudio>=2.0.0
+
+# Computer vision
+opencv-python>=4.8.0
+ultralytics>=8.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Utilities
+schedule>=1.2.0
+
+# Web server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+jinja2>=3.1.0
+python-multipart>=0.0.6

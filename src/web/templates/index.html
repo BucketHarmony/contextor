@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contextor Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Contextor</h1>
+                <span class="subtitle">Context Recorder Dashboard</span>
+            </div>
+            <div class="status-indicator" id="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="dashboard-grid">
+            <!-- Status Panel -->
+            <section class="panel status-panel">
+                <h2>System Status</h2>
+                <div class="status-grid" id="status-grid">
+                    <div class="status-card">
+                        <div class="status-label">Uptime</div>
+                        <div class="status-value" id="uptime">--</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Audio</div>
+                        <div class="status-value" id="audio-status">--</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Camera</div>
+                        <div class="status-value" id="camera-status">--</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-label">Storage</div>
+                        <div class="status-value" id="storage-status">--</div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" id="btn-generate">Generate Context Now</button>
+                    <button class="btn btn-secondary" id="btn-refresh">Refresh</button>
+                </div>
+            </section>
+
+            <!-- Current Context Panel -->
+            <section class="panel context-panel">
+                <h2>Current Context</h2>
+                <div class="context-meta" id="context-meta">
+                    <span>Last updated: <strong id="context-time">--</strong></span>
+                    <span>Period: <strong id="context-period">--</strong></span>
+                </div>
+
+                <div class="context-sections">
+                    <!-- Transcript Section -->
+                    <div class="context-section">
+                        <h3>Transcript</h3>
+                        <div class="transcript-box" id="transcript-box">
+                            <p class="placeholder">No speech detected yet...</p>
+                        </div>
+                    </div>
+
+                    <!-- Objects Section -->
+                    <div class="context-section">
+                        <h3>Objects Detected</h3>
+                        <div class="objects-grid" id="objects-grid">
+                            <p class="placeholder">No objects detected yet...</p>
+                        </div>
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div class="context-section">
+                        <h3>Summary</h3>
+                        <div class="summary-box" id="summary-box">
+                            <p class="placeholder">No summary available...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Images Panel -->
+            <section class="panel images-panel">
+                <h2>Recent Images</h2>
+                <div class="images-grid" id="images-grid">
+                    <p class="placeholder">No images captured yet...</p>
+                </div>
+            </section>
+
+            <!-- Live Transcripts Panel -->
+            <section class="panel transcripts-panel">
+                <h2>Live Transcripts</h2>
+                <div class="transcripts-list" id="transcripts-list">
+                    <p class="placeholder">Waiting for speech...</p>
+                </div>
+            </section>
+
+            <!-- History Panel -->
+            <section class="panel history-panel">
+                <h2>Context History</h2>
+                <div class="history-list" id="history-list">
+                    <p class="placeholder">Loading history...</p>
+                </div>
+            </section>
+
+            <!-- Storage Panel -->
+            <section class="panel storage-panel">
+                <h2>Storage</h2>
+                <div class="storage-stats" id="storage-stats">
+                    <div class="storage-bar">
+                        <div class="storage-used" id="storage-bar-used"></div>
+                    </div>
+                    <div class="storage-details" id="storage-details">
+                        <p class="placeholder">Loading...</p>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" id="btn-cleanup">Run Cleanup</button>
+            </section>
+        </main>
+
+        <!-- Image Modal -->
+        <div class="modal" id="image-modal">
+            <div class="modal-content">
+                <span class="modal-close" id="modal-close">&times;</span>
+                <img id="modal-image" src="" alt="Captured image">
+                <div class="modal-info" id="modal-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Contextor Configuration
+# Jetson Orin Nano Context Recorder
+
+audio:
+  device: "default"           # Audio input device name or index
+  sample_rate: 16000          # Sample rate in Hz (16000 recommended for Whisper)
+  channels: 1                 # Mono audio
+  chunk_duration_ms: 512      # Audio chunk size for processing
+  vad_threshold: 0.5          # Voice activity detection sensitivity (0.0-1.0)
+  vad_min_speech_ms: 250      # Minimum speech duration to trigger transcription
+  vad_min_silence_ms: 500     # Silence duration to end speech segment
+  whisper_model: "small.en"   # Whisper model: tiny, base, small, medium, large
+  whisper_device: "cuda"      # Device: cuda, cpu
+  whisper_compute_type: "float16"  # Compute type: float16, int8, float32
+
+vision:
+  camera_id: 0                # Camera index (0 for default) or device path
+  camera_width: 1280          # Capture width
+  camera_height: 720          # Capture height
+  camera_fps: 30              # Camera framerate
+  motion_detection_fps: 5     # FPS for motion detection (lower = less CPU)
+  motion_threshold: 25        # Pixel difference threshold for motion
+  motion_min_area: 500        # Minimum contour area to trigger motion event
+  motion_blur_size: 21        # Gaussian blur kernel size for noise reduction
+  capture_interval: 300       # Seconds between scheduled captures (5 min)
+  yolo_model: "yolov8n.pt"    # YOLO model: yolov8n, yolov8s, yolov8m
+  yolo_confidence: 0.5        # Minimum confidence threshold
+  yolo_device: "cuda"         # Device: cuda, cpu
+
+context:
+  output_dir: "./data/context"   # Directory for context JSON files
+  images_dir: "./data/images"    # Directory for captured images
+  interval: 300               # Context generation interval in seconds (5 min)
+  keep_images: true           # Store captured images on disk
+  max_storage_gb: 10.0        # Maximum storage usage before cleanup
+  max_context_files: 288      # Max context files to keep (288 = 24 hours)
+
+logging:
+  level: "INFO"               # Log level: DEBUG, INFO, WARNING, ERROR
+  file: "./logs/contextor.log"  # Log file path (null to disable)
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
