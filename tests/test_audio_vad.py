@@ -212,14 +212,18 @@ class TestVoiceActivityDetector:
         assert len(vad._speech_buffer) == 2
         assert vad._silence_samples == 0
 
-    def test_update_state_silence_during_speech(self, vad, silence_audio_chunk):
+    def test_update_state_silence_during_speech(self, vad):
         """Test state update when silence occurs during speech."""
         vad._is_speaking = True
         vad._speech_start_time = datetime.now()
         vad._speech_buffer = [np.zeros(8192, dtype=np.float32)]
         vad._silence_samples = 0
 
-        vad._update_state(silence_audio_chunk, 0.1)
+        # Use a short silence chunk that won't trigger end of speech
+        # min_silence_samples = 500 * 16000 / 1000 = 8000
+        # So use 4000 samples to stay below threshold
+        short_silence = np.zeros(4000, dtype=np.float32)
+        vad._update_state(short_silence, 0.1)
 
         assert vad._is_speaking  # Still speaking
-        assert vad._silence_samples == len(silence_audio_chunk)
+        assert vad._silence_samples == len(short_silence)

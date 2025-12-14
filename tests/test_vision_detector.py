@@ -168,7 +168,13 @@ class TestObjectDetector:
     def test_detect_error(self, mock_yolo_class, detector, sample_frame):
         """Test detection with error."""
         mock_model = MagicMock()
-        mock_model.predict.side_effect = Exception("Detection error")
+        # First call (warmup) succeeds, second call (detect) fails
+        mock_warmup_result = MagicMock()
+        mock_warmup_result.boxes = None
+        mock_model.predict.side_effect = [
+            [mock_warmup_result],  # Warmup call succeeds
+            Exception("Detection error"),  # Actual detect call fails
+        ]
         mock_yolo_class.return_value = mock_model
 
         detector.load_model()

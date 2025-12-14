@@ -196,6 +196,11 @@ class TestConfig:
 
     def test_setup_logging(self, temp_dir):
         """Test logging setup."""
+        # Reset logging to ensure clean state
+        for handler in logging.root.handlers[:]:
+            logging.root.removeHandler(handler)
+        logging.root.setLevel(logging.WARNING)  # Reset to default
+
         config = Config(
             logging=LoggingConfig(level="DEBUG", file=None)
         )

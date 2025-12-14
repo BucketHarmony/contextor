@@ -389,7 +389,7 @@ class TestMain:
         mock_contextor_class.return_value = mock_contextor
 
         # Simulate KeyboardInterrupt after start
-        def raise_keyboard():
+        def raise_keyboard(*args):
             raise KeyboardInterrupt()
 
         with patch("time.sleep", side_effect=raise_keyboard):
@@ -409,14 +409,14 @@ class TestMain:
         mock_contextor = MagicMock()
         mock_contextor_class.return_value = mock_contextor
 
-        def raise_keyboard():
+        def raise_keyboard(*args):
             raise KeyboardInterrupt()
 
         with patch("time.sleep", side_effect=raise_keyboard):
             with patch("sys.argv", ["contextor", "--no-web"]):
                 main()
 
-        mock_contextor.start.assert_called_with(enable_web=True, web_port=8080)
+        mock_contextor.start.assert_called_with(enable_web=False, web_port=8080)
 
     @patch("src.main.Contextor")
     @patch("src.main.load_config")
@@ -428,7 +428,7 @@ class TestMain:
         mock_contextor = MagicMock()
         mock_contextor_class.return_value = mock_contextor
 
-        def raise_keyboard():
+        def raise_keyboard(*args):
             raise KeyboardInterrupt()
 
         with patch("time.sleep", side_effect=raise_keyboard):
@@ -448,7 +448,7 @@ class TestMain:
         mock_contextor = MagicMock()
         mock_contextor_class.return_value = mock_contextor
 
-        def raise_keyboard():
+        def raise_keyboard(*args):
             raise KeyboardInterrupt()
 
         with patch("time.sleep", side_effect=raise_keyboard):

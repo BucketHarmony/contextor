@@ -165,17 +165,19 @@ class TestWebAPI:
         data = response.json()
         assert data["success"] is False
 
-    def test_get_context_history(self, client, mock_contextor):
+    def test_get_context_history(self, client, mock_contextor, temp_dir):
         """Test GET /api/context/history."""
-        mock_contextor.storage.get_recent_contexts.return_value = [
-            "/path/context_1.json",
-            "/path/context_2.json",
-        ]
+        # Create actual test files
+        context_dir = Path(mock_contextor.config.context.output_dir)
+        test_file1 = context_dir / "context_1.json"
+        test_file2 = context_dir / "context_2.json"
+        test_file1.write_text('{"test": 1}')
+        test_file2.write_text('{"test": 2}')
 
-        # Create mock files
-        for path in mock_contextor.storage.get_recent_contexts.return_value:
-            p = Path(path)
-            # Can't create files in /path, so just test API structure
+        mock_contextor.storage.get_recent_contexts.return_value = [
+            str(test_file1),
+            str(test_file2),
+        ]
 
         response = client.get("/api/context/history?limit=5")
         assert response.status_code == 200
@@ -275,6 +277,12 @@ class TestWebAPI:
     def test_set_contextor_instance(self):
         """Test setting contextor instance."""
         mock = MagicMock()
+        mock.get_status.return_value = {
+            "running": True,
+            "audio": {"capture_running": True},
+            "vision": {"camera_running": True},
+            "storage": {"total_size_mb": 0},
+        }
         set_contextor_instance(mock)
 
         # Verify it's set (indirectly via API)
